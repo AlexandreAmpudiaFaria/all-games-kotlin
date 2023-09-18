@@ -26,8 +26,32 @@ fun main() {
     val gson = Gson()
     val meuInfoJogo = gson.fromJson(json, InfoJogo::class.java)
 
-    val meuJogo = Jogo(meuInfoJogo.info.title, meuInfoJogo.info.thumb)
+//    try{
+//        val meuJogo = Jogo(meuInfoJogo.info.title, meuInfoJogo.info.thumb)
+//        println(meuJogo)
+//    }catch (ex: NullPointerException){
+//        println("jogo id inexistente")
+//    } exemplo usando try catch no kotlin
 
-    println(meuInfoJogo)
-    println(meuJogo)
+    val resultado = runCatching {
+        val meuJogo = Jogo(meuInfoJogo.info.title, meuInfoJogo.info.thumb)
+        println(meuJogo)
+    }
+
+    resultado.onFailure {
+        println("jogo id inexistente")
+    }
+
+    resultado.onSuccess {
+        println("Desenha inserir uma descrição personalizada? (s/n)")
+        if ("y".equals(leitura.nextLine(), ignoreCase = true)){
+            println("Insira a descrição personalizada: ")
+            val descricaoPersonalizada = leitura.nextLine()
+        } else {
+
+        }
+    }
+
+
+
 }
